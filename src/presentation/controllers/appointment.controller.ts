@@ -60,4 +60,9 @@ export class AppointmentController {
     async deleteAppointment(@Param('id') appointmentId: string): Promise<void> {
         return this.appointmentService.deleteAppointment(appointmentId);
     }
+
+    @Get('diagnoses/all')
+    async getAppointmentsWithDiagnoses() {
+        return this.appointmentService.getAppointmentWithDiagnoses();
+    }
 }

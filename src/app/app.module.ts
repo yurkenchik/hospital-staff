@@ -13,6 +13,8 @@ import {TreatmentModule} from "../modules/treatment.module";
 import {ScheduleModule} from "../modules/schedule.module";
 import {MedicalRecordModule} from "../modules/medical-record.module";
 import {AppointmentDiagnosisModule} from "../modules/appointment-diagnosis.module";
+import {PatientNoteModule} from "../modules/patient-note.module";
+import {ProceduresManagerModule} from "../infrastrcuture/database/procedures/procedures-manager.module";
 
 @Module({
     imports: [
@@ -32,7 +34,9 @@ import {AppointmentDiagnosisModule} from "../modules/appointment-diagnosis.modul
         TreatmentModule,
         ScheduleModule,
         MedicalRecordModule,
-        AppointmentDiagnosisModule
+        AppointmentDiagnosisModule,
+        PatientNoteModule,
+        ProceduresManagerModule
     ],
     controllers: [AppController],
     providers: [AppService, DatabaseService],

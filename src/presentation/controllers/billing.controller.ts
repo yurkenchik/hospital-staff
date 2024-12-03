@@ -3,6 +3,7 @@ import { CreateBillingDto } from "../../domain/dto/billing/create-billing.dto";
 import { UpdateBillingDto } from "../../domain/dto/billing/update-billing.dto";
 import { Billing } from "../../domain/entities/billing.entity";
 import {BillingService} from "../../infrastrcuture/services/billing.service";
+import {DeleteResult} from "typeorm";
 
 @Controller('billings')
 export class BillingController {
@@ -42,7 +43,7 @@ export class BillingController {
     }
 
     @Delete(':id')
-    async deleteBilling(@Param('id') billingId: string): Promise<void> {
+    async deleteBilling(@Param('id') billingId: string): Promise<DeleteResult> {
         return this.billingService.deleteBilling(billingId);
     }
 }

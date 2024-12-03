@@ -13,6 +13,7 @@ import {MedicalRecord} from "../../../domain/entities/medical-record.entity";
 import {PatientTreatment} from "../../../domain/entities/patient-treatment";
 import {Schedule} from "../../../domain/entities/schedule.entity";
 import {Treatment} from "../../../domain/entities/treatment.entity";
+import {PatientNote} from "../../../domain/entities/patient-note.entity";
 
 @Injectable()
 export class DatabaseService implements TypeOrmOptionsFactory {
@@ -29,8 +30,9 @@ export class DatabaseService implements TypeOrmOptionsFactory {
             password: this.configService.get<string>('DB_PASSWORD'),
             database: this.configService.get<string>('DB_NAME'),
             // entities: [join(__dirname, "../../domain/entities/*.entity.{js.ts}")],
-            entities: [Diagnosis, Appointment, AppointmentDiagnosis, Billing, Doctor, Patient, MedicalRecord, PatientTreatment, Schedule, Treatment],
+            entities: [Diagnosis, Appointment, AppointmentDiagnosis, Billing, Doctor, Patient, MedicalRecord, PatientTreatment, Schedule, Treatment, PatientNote],
             synchronize: false,
+            logging: true,
             migrations: [join(__dirname, 'migrations/*.{js,ts}')],
             extra: {
                 ssl: false

@@ -2,12 +2,11 @@ import {Injectable} from "@nestjs/common";
 import {BillingRepository} from "../../domain/repositories/billing,repository";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Billing} from "../../domain/entities/billing.entity";
-import {InsertResult, Repository} from "typeorm";
+import {DeleteResult, InsertResult, Repository} from "typeorm";
 import {UpdateBillingDto} from "../../domain/dto/billing/update-billing.dto";
 import {CreateBillingDto} from "../../domain/dto/billing/create-billing.dto";
 import {BillingNotFoundException} from "../../common/exceptions/not-found/billing-not-found.exception";
 import {AppointmentService} from "./appointment.service";
-import {Appointment} from "../../domain/entities/appointment.entity";
 
 @Injectable()
 export class BillingService extends BillingRepository {
@@ -65,18 +64,18 @@ export class BillingService extends BillingRepository {
     }
 
     async updateBilling(billingId: string, updateBillingDto: UpdateBillingDto): Promise<Billing> {
-        await this.billingRepository
-            .createQueryBuilder()
-            .update()
-            .set(updateBillingDto)
-            .where("id = :billingId", { billingId })
-            .execute();
+        const billing = await this.billingRepository.findOne({ where: { id: billingId } });
+        if (!billing) {
+            throw new BillingNotFoundException();
+        }
 
-        return this.getBillingById(billingId);
+        billing.preventModifications();
+        Object.assign(billing, updateBillingDto);
+        return this.billingRepository.save(billing);
     }
 
-    async deleteBilling(billingId: string): Promise<void> {
-        await this.billingRepository
+    async deleteBilling(billingId: string): Promise<DeleteResult> {
+        return this.billingRepository
             .createQueryBuilder()
             .delete()
             .from(Billing)

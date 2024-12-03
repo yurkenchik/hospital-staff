@@ -40,19 +40,13 @@ export class PatientService extends PatientRepository {
         const birthdate = new Birthdate(createPatientDto.birthDate).getValue();
         const phoneNumber = new PhoneNumber(createPatientDto.phoneNumber).getValue();
 
-        const patientInsertResult: InsertResult = await this.patientRepository
-            .createQueryBuilder()
-            .insert()
-            .into(Patient)
-            .values({
-                ...createPatientDto,
-                birthdate,
-                phoneNumber
-            })
-            .execute();
+        const patient = this.patientRepository.create({
+            ...createPatientDto,
+            birthdate,
+            phoneNumber,
+        })
 
-        const insertedPatientId = patientInsertResult.identifiers[patientInsertResult.identifiers.length - 1].id;
-        return this.getPatientById(insertedPatientId);
+        return this.patientRepository.save(patient);
     }
 
     async updatePatient(patientId: string, updatePatientDto: UpdatePatientDto): Promise<Patient> {

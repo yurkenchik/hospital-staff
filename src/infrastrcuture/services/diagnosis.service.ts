@@ -4,7 +4,7 @@ import {Diagnosis} from "../../domain/entities/diagnosis.entity";
 import {CreateDiagnosisDto} from "../../domain/dto/diagnosis/create-diagnosis.dto";
 import {UpdateDiagnosisDto} from "../../domain/dto/diagnosis/update-diagnosis.dto";
 import {InjectRepository} from "@nestjs/typeorm";
-import {InsertResult, Repository, UpdateResult} from "typeorm";
+import {InsertResult, Repository} from "typeorm";
 import {DiagnosisNotFoundException} from "../../common/exceptions/not-found/diagnosis-not-found.exception";
 
 @Injectable()

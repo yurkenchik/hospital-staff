@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {InsertResult, Repository} from "typeorm";
 import {Appointment} from "../../domain/entities/appointment.entity";
@@ -113,5 +113,47 @@ export class AppointmentService extends AppointmentRepository {
             .from(Appointment)
             .where("id = :appointmentId", { appointmentId })
             .execute();
+    }
+
+    async getAppointmentWithDiagnoses() {
+        const appointmentWIthDiagnosesResponse = await this.appointmentRepository
+            .createQueryBuilder('appointment')
+            .leftJoinAndSelect('appointment.patient', 'patient')
+            .leftJoinAndSelect('appointment.doctor', 'doctor')
+            .leftJoinAndSelect('appointment.appointmentDiagnoses', 'appointmentDiagnosis')
+            .leftJoinAndSelect('appointmentDiagnosis.diagnosis', 'diagnosis')
+            .getMany();
+
+        if (!appointmentWIthDiagnosesResponse.length) {
+            throw new NotFoundException('No appointments found');
+        }
+
+        return appointmentWIthDiagnosesResponse.map((appointment) => ({
+            id: appointment.id,
+            appointmentDate: appointment.appointmentDate,
+            cost: appointment.cost,
+            doctor: appointment.doctor
+                ? {
+                    id: appointment.doctor.id,
+                    email: appointment.doctor.email,
+                    firstName: appointment.doctor.firstName,
+                    lastName: appointment.doctor.lastName,
+                    phoneNumber: appointment.doctor.phoneNumber,
+                }
+                : null,
+            patient: appointment.patient
+                ? {
+                    id: appointment.patient.id,
+                    firstName: appointment.patient.firstName,
+                    lastName: appointment.patient.lastName,
+                    phoneNumber: appointment.patient.phoneNumber,
+                }
+                : null,
+            diagnoses: appointment.appointmentDiagnoses?.map((appointmentDiagnosis) => ({
+                id: appointmentDiagnosis.diagnosis.id,
+                name: appointmentDiagnosis.diagnosis.diagnosisName,
+                description: appointmentDiagnosis.diagnosis.description,
+            })) || [],
+        }));
     }
 }
