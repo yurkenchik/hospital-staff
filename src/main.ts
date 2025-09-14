@@ -1,18 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import {ConfigService} from "@nestjs/config";
-import {ValidationPipe} from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Logger, ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    const configService = app.get(ConfigService);
+    const nestApplication = await NestFactory.create(AppModule);
+    const configService = nestApplication.get(ConfigService);
+    const logger = new Logger('NestApplication');
 
-    app.useGlobalPipes(new ValidationPipe());
-    app.setGlobalPrefix("api");
+    nestApplication.useGlobalPipes(new ValidationPipe());
+    nestApplication.setGlobalPrefix("api");
 
     const PORT = configService.get<string>("PORT");
-    await app.listen(PORT, () => {
-        console.log(`Server running on port: ${PORT}`);
+    await nestApplication.listen(PORT, () => {
+        logger.verbose(`Server running on port: ${PORT}`);
     });
 }
 bootstrap();
