@@ -12,6 +12,7 @@ import { BillingModule } from "@domain/billing/billing.module";
 import { TreatmentModule } from "@domain/treatment/treatment.module";
 import { ScheduleModule } from "@domain/schedule/schedule.module";
 import { MedicalRecordModule } from "@domain/medical-record/medical-record.module";
+import { CognitoAuthModule } from "@nestjs-cognito/auth";
 
 @Module({
     imports: [
@@ -31,6 +32,17 @@ import { MedicalRecordModule } from "@domain/medical-record/medical-record.modul
         TreatmentModule,
         ScheduleModule,
         MedicalRecordModule,
+        CognitoAuthModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => ({
+                jwtVerifier: {
+                    userPoolId: configService.get("COGNITO_USER_POOL_ID") as string,
+                    clientId: configService.get("COGNITO_CLIENT_ID"),
+                    tokenUse: "id",
+                },
+            }),
+            inject: [ConfigService],
+        }),
     ],
     controllers: [AppController],
     providers: [AppService, PostgresService],

@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { DataSourceOptions } from "typeorm";
 import { ConfigService } from "@nestjs/config";
-import { join } from "path";
 import { TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { DiagnosisOrmEntity } from "../orm-entities/diagnosis-orm.entity";
 import { AppointmentOrmEntity } from "../orm-entities/appointment-orm.entity";
@@ -37,7 +36,7 @@ export class PostgresService implements TypeOrmOptionsFactory {
                 TreatmentOrmEntity
             ],
             synchronize: false,
-            migrations: [join(__dirname, 'migrations/*.{js,ts}')],
+            // migrations: [join(__dirname, 'migrations/*.{js,ts}')],
             extra: { ssl: false }
         }
     }
