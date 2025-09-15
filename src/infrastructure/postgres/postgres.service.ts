@@ -15,7 +15,15 @@ import { TreatmentOrmEntity } from "../orm-entities/treatment-orm.entity";
 export class PostgresService implements TypeOrmOptionsFactory {
     constructor(
         private readonly configService: ConfigService,
-    ) {}
+    ) {
+        console.log(JSON.stringify({
+            host: this.configService.get<string>('POSTGRES_HOST'),
+            port: this.configService.get<number>('POSTGRES_PORT'),
+            username: this.configService.get<string>('POSTGRES_USER'),
+            password: this.configService.get<string>('POSTGRES_PASSWORD'),
+            database: this.configService.get<string>('POSTGRES_NAME'),
+        }, null, 4));
+    }
 
     createTypeOrmOptions(): DataSourceOptions {
         return {
