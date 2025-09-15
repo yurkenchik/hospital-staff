@@ -23,7 +23,7 @@ jobs:
         run: yarn build
 
       - name: Install Serverless Framework
-        run: yarn add serverless
+        run: yarn global add serverless
 
       - name: Deploy to AWS
         env:
@@ -37,4 +37,4 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
-        run: serverless deploy --stage prod
+        run: ./node_modules/.bin/serverless deploy --stage stage
