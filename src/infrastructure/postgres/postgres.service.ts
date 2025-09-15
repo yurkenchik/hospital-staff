@@ -35,9 +35,8 @@ export class PostgresService implements TypeOrmOptionsFactory {
                 ScheduleOrmEntity,
                 TreatmentOrmEntity
             ],
-            synchronize: false,
-            // migrations: [join(__dirname, 'migrations/*.{js,ts}')],
-            extra: { ssl: false }
+            synchronize: true,
+            // extra: { ssl: false }
         }
     }
 }

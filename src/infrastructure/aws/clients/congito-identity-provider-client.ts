@@ -1,8 +1,19 @@
 import { ConfigService } from "@nestjs/config";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
+import { Injectable } from "@nestjs/common";
 
-const configService = new ConfigService();
+@Injectable()
+export class CognitoIdentityProviderClient {
+    private cognitoIdentityProviderClient: CognitoIdentityServiceProvider | null = null;
 
-export const cognitoIdentityProviderClient = new CognitoIdentityServiceProvider({
-    region: configService.get<string>("AWS_REGION"),
-});
+    constructor(private readonly configService: ConfigService) {}
+
+    getClient(): CognitoIdentityServiceProvider {
+        if (!this.cognitoIdentityProviderClient) {
+            this.cognitoIdentityProviderClient = new CognitoIdentityServiceProvider({
+                region: this.configService.get<string>("AWS_REGION"),
+            });
+        }
+        return this.cognitoIdentityProviderClient;
+    }
+}

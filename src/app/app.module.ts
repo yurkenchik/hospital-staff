@@ -13,6 +13,9 @@ import { TreatmentModule } from "@domain/treatment/treatment.module";
 import { ScheduleModule } from "@domain/schedule/schedule.module";
 import { MedicalRecordModule } from "@domain/medical-record/medical-record.module";
 import { CognitoAuthModule } from "@nestjs-cognito/auth";
+import { PostgresModule } from "@infrastructure/postgres/postgres.module";
+import { CognitoAuthorizationModule } from "@domain/cognito-authorization/cognito-authorization.module";
+import { AwsModule } from "@infrastructure/aws/aws.module";
 
 @Module({
     imports: [
@@ -20,9 +23,9 @@ import { CognitoAuthModule } from "@nestjs-cognito/auth";
             isGlobal: true,
         }),
         TypeOrmModule.forRootAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useClass: PostgresService
+            imports: [ConfigModule, PostgresModule],
+            inject: [ConfigService, PostgresService],
+            useClass: PostgresService,
         }),
         DiagnosisModule,
         DoctorModule,
@@ -43,6 +46,8 @@ import { CognitoAuthModule } from "@nestjs-cognito/auth";
             }),
             inject: [ConfigService],
         }),
+        CognitoAuthorizationModule,
+        AwsModule
     ],
     controllers: [AppController],
     providers: [AppService, PostgresService],
