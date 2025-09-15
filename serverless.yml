@@ -3,7 +3,7 @@ service: hospital-staff-management
 
 plugins:
     - serverless-offline
-    - serverless-plugin-optimize
+#    - serverless-plugin-optimize
 
 provider:
     name: aws
