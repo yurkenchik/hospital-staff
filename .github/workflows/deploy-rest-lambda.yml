@@ -37,5 +37,4 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-        run: serverless deploy --stage prod
+        run: serverless deploy --stage stage
