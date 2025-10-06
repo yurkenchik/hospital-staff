@@ -6,6 +6,7 @@ import serverlessExpress from "@vendia/serverless-express";
 import express from "express";
 import { ExpressAdapter } from "@nestjs/platform-express";
 import { ConfigService } from "@nestjs/config";
+import { RequestLoggerInterceptor } from "@presentation/interceptors/request-logger.interceptor";
 
 let cachedNestApplication: any = null;
 
@@ -23,6 +24,7 @@ export async function createApp() {
     const globalPrefix = `${configService.get<string>('AWS_ENVIRONMENT')}/api`
 
     nestApplication.useGlobalPipes(new ValidationPipe());
+    nestApplication.useGlobalInterceptors(new RequestLoggerInterceptor());
     nestApplication.setGlobalPrefix(globalPrefix);
 
     const swaggerConfig = new DocumentBuilder()
