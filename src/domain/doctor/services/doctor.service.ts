@@ -40,7 +40,7 @@ export class DoctorService {
 
     async updateDoctor(id: string, updateDoctorDto: UpdateDoctorDto): Promise<DoctorDomainEntity> {
         const doctor = await this.getDoctorById(id);
-        return await this.doctorRepository.updateDoctor(id, updateDoctorDto);
+        return await this.doctorRepository.updateDoctor(doctor.id, updateDoctorDto);
     }
 
     async deleteDoctor(id: string): Promise<void> {

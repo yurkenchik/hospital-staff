@@ -8,7 +8,7 @@ export class CreatePatientDto {
     readonly lastName: string;
 
     @ApiProperty()
-    readonly birthDate: string;
+    readonly birthdate: string;
 
     @ApiProperty()
     readonly phoneNumber: string;

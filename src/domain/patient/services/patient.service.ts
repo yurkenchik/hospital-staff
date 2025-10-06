@@ -30,19 +30,19 @@ export class PatientService {
     }
 
     async createPatient(createPatientDto: CreatePatientDto): Promise<PatientDomainEntity> {
-        const birthDate = new Birthdate(createPatientDto.birthDate).getValue();
+        const birthdate = new Birthdate(createPatientDto.birthdate).getValue();
         const phoneNumber = new PhoneNumber(createPatientDto.phoneNumber).getValue();
 
         return await this.patientRepository.createPatient({
             ...createPatientDto,
             phoneNumber,
-            birthDate
+            birthdate
         });
     }
 
     async updatePatient(patientId: string, updatePatientDto: UpdatePatientDto): Promise<PatientDomainEntity> {
         const patient = await this.getPatientById(patientId);
-        return await this.patientRepository.updatePatient(patientId, updatePatientDto);
+        return await this.patientRepository.updatePatient(patient.id, updatePatientDto);
     }
 
     async deletePatient(patientId: string): Promise<void> {
