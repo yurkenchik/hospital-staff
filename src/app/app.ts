@@ -7,7 +7,13 @@ import express from "express";
 import { ExpressAdapter } from "@nestjs/platform-express";
 import { ConfigService } from "@nestjs/config";
 
+let cachedNestApplication: any = null;
+
 export async function createApp() {
+    if (cachedNestApplication) {
+        return cachedNestApplication;
+    }
+
     const expressApp = express();
 
     const adapter = new ExpressAdapter(expressApp);
@@ -29,5 +35,7 @@ export async function createApp() {
     await nestApplication.init();
 
     const application = nestApplication.getHttpAdapter().getInstance();
-    return serverlessExpress({ app: application });
+    cachedNestApplication = serverlessExpress({ app: application });
+
+    return cachedNestApplication;
 }
