@@ -7,6 +7,7 @@ import express from "express";
 import { ExpressAdapter } from "@nestjs/platform-express";
 import { ConfigService } from "@nestjs/config";
 import { RequestLoggerInterceptor } from "@presentation/interceptors/request-logger.interceptor";
+import { GlobalExceptionsFilter } from "@presentation/filters/global-exception.filter";
 
 let cachedNestApplication: any = null;
 
@@ -25,6 +26,7 @@ export async function createApp() {
 
     nestApplication.useGlobalPipes(new ValidationPipe());
     nestApplication.useGlobalInterceptors(new RequestLoggerInterceptor());
+    nestApplication.useGlobalFilters(new GlobalExceptionsFilter());
     nestApplication.setGlobalPrefix(globalPrefix);
 
     const swaggerConfig = new DocumentBuilder()
