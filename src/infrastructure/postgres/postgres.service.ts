@@ -36,8 +36,7 @@ export class PostgresService implements TypeOrmOptionsFactory {
                 TreatmentOrmEntity
             ],
             synchronize: true,
-            // ssl: { rejectUnauthorized: true }
-            ssl: false
+            ssl: { rejectUnauthorized: true },
         }
     }
 }
