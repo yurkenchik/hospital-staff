@@ -5,6 +5,10 @@ plugins:
     - serverless-offline
 #    - serverless-plugin-optimize
 
+custom:
+    serverless-offline:
+        noPrependStageInUrl: true
+
 provider:
     name: aws
     runtime: nodejs18.x
@@ -21,6 +25,8 @@ provider:
               - 'ec2:DeleteNetworkInterface'
           Resource: '*'
     environment:
+        PGSSLMODE: 'disable'
+        AWS_ENVIRONMENT: ${env:AWS_ENVIRONMENT}
         ENVIRONMENT: ${env:ENVIRONMENT}
         POSTGRES_HOST: ${env:POSTGRES_HOST}
         POSTGRES_PORT: ${env:POSTGRES_PORT}

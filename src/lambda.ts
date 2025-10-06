@@ -1,19 +1,12 @@
-import { createServer, proxy } from 'aws-serverless-express';
-import { Context, APIGatewayProxyEvent } from 'aws-lambda';
+import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { createApp } from "./app/app";
+import serverlessExpress from "@vendia/serverless-express";
 
-let cachedServer;
-
-async function bootstrapServer() {
-    if (!cachedServer) {
-        const app = await createApp();
-        const expressApp = app.getHttpAdapter().getInstance();
-        cachedServer = createServer(expressApp);
-    }
-    return cachedServer;
-}
+let server: ReturnType<typeof serverlessExpress> | null = null;
 
 export const handler = async (event: APIGatewayProxyEvent, context: Context) => {
-    const server = await bootstrapServer();
-    return proxy(server, event, context, 'PROMISE').promise;
+    if (!server) {
+        server = await createApp();
+    }
+    return server(event, context);
 };
