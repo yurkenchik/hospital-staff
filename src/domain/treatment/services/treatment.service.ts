@@ -1,17 +1,15 @@
-import {forwardRef, Inject, Injectable} from '@nestjs/common';
-import {TreatmentRepository} from "../repositories/treatment.repository";
-import {InsertResult, Repository} from 'typeorm';
-import {TreatmentOrmEntity} from "@infrastructure/orm-entities/treatment-orm.entity";
-import {CreateTreatmentDto} from "../dto/request/create-treatment.dto";
-import {UpdateTreatmentDto} from "../dto/request/update-treatment.dto";
-import {TreatmentNotFoundException} from "@core/exceptions/not-found/treatment-not-found.exception";
-import {TreatmentDomainEntity} from "../entities/treatment-domain.entity";
-import {TREATMENT_REPOSITORY} from "../treatment.module";
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { TreatmentRepository } from "../repositories/treatment.repository";
+import { CreateTreatmentDto } from "../dto/request/create-treatment.dto";
+import { UpdateTreatmentDto } from "../dto/request/update-treatment.dto";
+import { TreatmentNotFoundException } from "@core/exceptions/not-found/treatment-not-found.exception";
+import { TreatmentDomainEntity } from "../entities/treatment-domain.entity";
+import { TREATMENT_REPOSITORY } from "@domain/treatment/treatment.tokens";
 
 @Injectable()
 export class TreatmentService {
     constructor(
-        @Inject(forwardRef(() => TREATMENT_REPOSITORY))
+        @Inject(TREATMENT_REPOSITORY)
         private readonly treatmentRepository: TreatmentRepository,
     ) {}
 

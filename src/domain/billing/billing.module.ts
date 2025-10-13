@@ -5,8 +5,8 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {BillingOrmEntity} from "@infrastructure/orm-entities/billing-orm.entity";
 import {BillingPostgresRepository} from "@infrastructure/repositories/billing-postgres.repository";
 import {AppointmentModule} from "../appointment/appointment.module";
+import {BILLING_REPOSITORY} from "./billing.tokens";
 
-export const BILLING_REPOSITORY = Symbol('BillingRepository');
 
 @Module({
     providers: [

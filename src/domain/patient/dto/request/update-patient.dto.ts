@@ -12,7 +12,7 @@ export class UpdatePatientDto {
 
     @ApiProperty()
     @IsOptional()
-    readonly birthDate: string;
+    readonly birthdate: string;
 
     @ApiProperty()
     @IsOptional()

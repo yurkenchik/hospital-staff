@@ -3,7 +3,8 @@ import { TreatmentService } from "@domain/treatment/services/treatment.service";
 import { TreatmentDomainEntity } from "@domain/treatment/entities/treatment-domain.entity";
 import { CreateTreatmentDto } from "@domain/treatment/dto/request/create-treatment.dto";
 import { UpdateTreatmentDto } from "@domain/treatment/dto/request/update-treatment.dto";
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from "@nestjs/swagger";
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { TreatmentNotFoundException } from "@core/exceptions/not-found/treatment-not-found.exception";
 
 @Controller('treatments')
 export class TreatmentController {
@@ -12,6 +13,7 @@ export class TreatmentController {
     @ApiOperation({ summary: 'Getting treatment by id' })
     @ApiParam({ name: 'id', type: String })
     @ApiResponse({ status: HttpStatus.OK, type: TreatmentDomainEntity })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: TreatmentNotFoundException.prototype.message })
     @Get(':id')
     async getTreatmentById(@Param('id') treatmentId: string): Promise<TreatmentDomainEntity> {
         return this.treatmentService.getTreatmentById(treatmentId);
@@ -32,6 +34,11 @@ export class TreatmentController {
         return this.treatmentService.createTreatment(createTreatmentDto);
     }
 
+    @ApiOperation({ summary: 'Updating treatment by id' })
+    @ApiParam({ name: 'id', type: String })
+    @ApiBody({ type: UpdateTreatmentDto })
+    @ApiResponse({ status: HttpStatus.OK, type: TreatmentDomainEntity })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: TreatmentNotFoundException.prototype.message })
     @Patch(':id')
     async updateTreatment(
         @Param('id') treatmentId: string,
@@ -40,6 +47,10 @@ export class TreatmentController {
         return this.treatmentService.updateTreatment(treatmentId, updateTreatmentDto);
     }
 
+    @ApiOperation({ summary: 'Deleting treatment by id' })
+    @ApiParam({ name: 'id', type: String })
+    @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'Treatment successfully deleted.' })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: TreatmentNotFoundException.prototype.message })
     @Delete(':id')
     async deleteTreatment(@Param('id') treatmentId: string): Promise<void> {
         return this.treatmentService.deleteTreatment(treatmentId);

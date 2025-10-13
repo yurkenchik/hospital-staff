@@ -4,8 +4,8 @@ import {DiagnosisController} from "@presentation/http/diagnosis.controller";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {DiagnosisOrmEntity} from "@infrastructure/orm-entities/diagnosis-orm.entity";
 import {DiagnosisPostgresRepository} from "@infrastructure/repositories/diagnosis-postgres.repository";
+import {DIAGNOSIS_REPOSITORY} from "./diagnosis.tokens";
 
-export const DIAGNOSIS_REPOSITORY = Symbol('DiagnosisRepository');
 
 @Module({
     providers: [

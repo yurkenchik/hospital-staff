@@ -1,11 +1,10 @@
-import {Module} from "@nestjs/common";
-import {TreatmentService} from "./services/treatment.service";
-import {TreatmentController} from "@presentation/http/treatment.controller";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {TreatmentOrmEntity} from "@infrastructure/orm-entities/treatment-orm.entity";
-import {TreatmentPostgresRepository} from "@infrastructure/repositories/treatment-postgres.repository";
-
-export const TREATMENT_REPOSITORY = Symbol('TreatmentRepository');
+import { Module } from "@nestjs/common";
+import { TreatmentService } from "./services/treatment.service";
+import { TreatmentController } from "@presentation/http/treatment.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { TreatmentOrmEntity } from "@infrastructure/orm-entities/treatment-orm.entity";
+import { TreatmentPostgresRepository } from "@infrastructure/repositories/treatment-postgres.repository";
+import { TREATMENT_REPOSITORY } from "./treatment.tokens";
 
 @Module({
     providers: [

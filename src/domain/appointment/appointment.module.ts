@@ -6,8 +6,8 @@ import { DoctorModule } from "../doctor/doctor.module";
 import { PatientModule } from "../patient/patient.module";
 import { AppointmentOrmEntity } from "@infrastructure/orm-entities/appointment-orm.entity";
 import { AppointmentPostgresRepository } from "@infrastructure/repositories/appointment-postgres.repository";
+import { APPOINTMENT_REPOSITORY } from "./appointment.tokens";
 
-export const APPOINTMENT_REPOSITORY = Symbol('AppointmentRepository');
 
 @Module({
     providers: [

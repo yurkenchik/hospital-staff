@@ -1,17 +1,17 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { DoctorDomainEntity } from "../entities/doctor-domain.entity";
 import { DoctorNotFoundException } from "@core/exceptions/not-found/doctor-not-found.exception";
+import { DoctorRepository } from "@domain/doctor/repositories/doctor.repository";
 import { Email } from "@core/value-objects/email.vo";
 import { PhoneNumber } from "@core/value-objects/phone-number.vo";
-import { DOCTOR_REPOSITORY } from "../doctor.module";
+import { DOCTOR_REPOSITORY } from "@domain/doctor/doctor.tokens";
 import { CreateDoctorDto } from "../dto/request/create-doctor.dto";
 import { UpdateDoctorDto } from "../dto/request/update-doctor.dto";
-import { DoctorRepository } from "@domain/doctor/repositories/doctor.repository";
 
 @Injectable()
 export class DoctorService {
     constructor(
-        @Inject(forwardRef(() => DOCTOR_REPOSITORY))
+        @Inject(DOCTOR_REPOSITORY)
         private readonly doctorRepository: DoctorRepository
     ) {}
 

@@ -4,14 +4,14 @@ import { MedicalRecordDomainEntity } from "../entities/medical-record-domain.ent
 import { MedicalRecordNotFoundException } from "@core/exceptions/not-found/medical-record-not-found.exception";
 import { CreateMedicalRecordDto } from "../dto/request/create-medical-record.dto";
 import { UpdateMedicalRecordDto } from "../dto/request/update-medical-record.dto";
-import { MEDICAL_RECORD_REPOSITORY } from "../medical-record.module";
 import { DoctorService } from "@domain/doctor/services/doctor.service";
 import { PatientService } from "@domain/patient/services/patient.service";
+import { MEDICAL_RECORD_REPOSITORY } from "@domain/medical-record/medical-record.tokens";
 
 @Injectable()
 export class MedicalRecordService {
     constructor(
-        @Inject(forwardRef(() => MEDICAL_RECORD_REPOSITORY))
+        @Inject(MEDICAL_RECORD_REPOSITORY)
         private readonly medicalRecordRepository: MedicalRecordRepository,
         private readonly doctorService: DoctorService,
         private readonly patientService: PatientService,

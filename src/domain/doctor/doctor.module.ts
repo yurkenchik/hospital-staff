@@ -4,8 +4,8 @@ import { DoctorController } from "@presentation/http/doctor.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DoctorOrmEntity } from "@infrastructure/orm-entities/doctor-orm.entity";
 import { DoctorPostgresRepository } from "@infrastructure/repositories/doctor-postgres.repository";
+import { DOCTOR_REPOSITORY } from "./doctor.tokens";
 
-export const DOCTOR_REPOSITORY = Symbol('DoctorRepository');
 
 @Module({
     providers: [

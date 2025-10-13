@@ -1,11 +1,10 @@
-import {Module} from "@nestjs/common";
-import {PatientService} from "./services/patient.service";
-import {PatientController} from "@presentation/http/patient.controller";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {PatientOrmEntity} from "@infrastructure/orm-entities/patient-orm.entity";
-import {PatientPostgresRepository} from "@infrastructure/repositories/patient-postgres.repository";
-
-export const PATIENT_REPOSITORY = Symbol('PatientRepository');
+import { Module } from "@nestjs/common";
+import { PatientService } from "./services/patient.service";
+import { PatientController } from "@presentation/http/patient.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { PatientOrmEntity } from "@infrastructure/orm-entities/patient-orm.entity";
+import { PatientPostgresRepository } from "@infrastructure/repositories/patient-postgres.repository";
+import { PATIENT_REPOSITORY } from "./patient.tokens";
 
 @Module({
     providers: [

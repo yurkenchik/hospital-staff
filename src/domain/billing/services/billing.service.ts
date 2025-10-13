@@ -1,19 +1,16 @@
-import {forwardRef, Inject, Injectable} from "@nestjs/common";
-import {BillingRepository} from "../repositories/billing.repository";
-import {InjectRepository} from "@nestjs/typeorm";
-import {BillingOrmEntity} from "@infrastructure/orm-entities/billing-orm.entity";
-import {InsertResult, Repository} from "typeorm";
-import {UpdateBillingDto} from "../dto/request/update-billing.dto";
-import {CreateBillingDto} from "../dto/request/create-billing.dto";
-import {BillingNotFoundException} from "@core/exceptions/not-found/billing-not-found.exception";
-import {AppointmentService} from "@domain/appointment/services/appointment.service";
-import {BillingDomainEntity} from "../entities/billing-domain.entity";
-import {BILLING_REPOSITORY} from "../billing.module";
+import { Inject, Injectable } from "@nestjs/common";
+import { BillingRepository } from "../repositories/billing.repository";
+import { UpdateBillingDto } from "../dto/request/update-billing.dto";
+import { CreateBillingDto } from "../dto/request/create-billing.dto";
+import { BillingNotFoundException } from "@core/exceptions/not-found/billing-not-found.exception";
+import { AppointmentService } from "@domain/appointment/services/appointment.service";
+import { BillingDomainEntity } from "../entities/billing-domain.entity";
+import { BILLING_REPOSITORY } from "@domain/billing/billing.tokens";
 
 @Injectable()
 export class BillingService {
     constructor(
-        @Inject(forwardRef(() => BILLING_REPOSITORY))
+        @Inject(BILLING_REPOSITORY)
         private readonly billingRepository: BillingRepository,
         private readonly appointmentService: AppointmentService,
     ) {}

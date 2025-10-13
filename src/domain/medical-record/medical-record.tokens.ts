@@ -1,0 +1,1 @@
+export const MEDICAL_RECORD_REPOSITORY = Symbol('MedicalRecordRepository');

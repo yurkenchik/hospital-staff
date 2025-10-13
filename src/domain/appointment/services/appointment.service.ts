@@ -1,20 +1,17 @@
-import {forwardRef, Inject, Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {InsertResult, Repository} from "typeorm";
-import {AppointmentOrmEntity} from "@infrastructure/orm-entities/appointment-orm.entity";
-import {AppointmentRepository} from "../repositories/appointment.repository";
-import {CreateAppointmentDto} from "../dto/request/create-appointment.dto";
-import {UpdateAppointmentDto} from "../dto/request/update-appointment.dto";
-import {AppointmentNotFoundException} from "@core/exceptions/not-found/appointment-not-found.exception";
-import {DoctorService} from "@domain/doctor/services/doctor.service";
-import {PatientService} from "@domain/patient/services/patient.service";
-import {AppointmentDomainEntity} from "../entities/appointment-domain.entity";
-import {APPOINTMENT_REPOSITORY} from "../appointment.module";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { AppointmentRepository } from "../repositories/appointment.repository";
+import { CreateAppointmentDto } from "../dto/request/create-appointment.dto";
+import { UpdateAppointmentDto } from "../dto/request/update-appointment.dto";
+import { AppointmentNotFoundException } from "@core/exceptions/not-found/appointment-not-found.exception";
+import { DoctorService } from "@domain/doctor/services/doctor.service";
+import { PatientService } from "@domain/patient/services/patient.service";
+import { AppointmentDomainEntity } from "../entities/appointment-domain.entity";
+import { APPOINTMENT_REPOSITORY } from "@domain/appointment/appointment.tokens";
 
 @Injectable()
 export class AppointmentService {
     constructor(
-        @Inject(forwardRef(() => APPOINTMENT_REPOSITORY))
+        @Inject(APPOINTMENT_REPOSITORY)
         private readonly appointmentRepository: AppointmentRepository,
         private readonly doctorService: DoctorService,
         private readonly patientService: PatientService,

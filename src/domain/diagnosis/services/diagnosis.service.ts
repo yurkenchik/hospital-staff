@@ -1,18 +1,15 @@
-import {forwardRef, Inject, Injectable} from "@nestjs/common";
-import {DiagnosisRepository} from "../repositories/diagnosis.repository";
-import {DiagnosisOrmEntity} from "@infrastructure/orm-entities/diagnosis-orm.entity";
-import {CreateDiagnosisDto} from "../dto/request/create-diagnosis.dto";
-import {UpdateDiagnosisDto} from "../dto/request/update-diagnosis.dto";
-import {InjectRepository} from "@nestjs/typeorm";
-import {InsertResult, Repository, UpdateResult} from "typeorm";
-import {DiagnosisNotFoundException} from "@core/exceptions/not-found/diagnosis-not-found.exception";
-import {DiagnosisDomainEntity} from "../entities/diagnosis-domain.entity";
-import {DIAGNOSIS_REPOSITORY} from "../diagnosis.module";
+import { Inject, Injectable } from "@nestjs/common";
+import { DiagnosisRepository } from "../repositories/diagnosis.repository";
+import { CreateDiagnosisDto } from "../dto/request/create-diagnosis.dto";
+import { UpdateDiagnosisDto } from "../dto/request/update-diagnosis.dto";
+import { DiagnosisNotFoundException } from "@core/exceptions/not-found/diagnosis-not-found.exception";
+import { DiagnosisDomainEntity } from "../entities/diagnosis-domain.entity";
+import { DIAGNOSIS_REPOSITORY } from "@domain/diagnosis/diagnosis.tokens";
 
 @Injectable()
 export class DiagnosisService {
     constructor(
-        @Inject(forwardRef(() => DIAGNOSIS_REPOSITORY))
+        @Inject(DIAGNOSIS_REPOSITORY)
         private readonly diagnosisRepository: DiagnosisRepository,
     ) {}
 
