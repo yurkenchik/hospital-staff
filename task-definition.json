@@ -1,0 +1,30 @@
+{
+  "family": "hospital-staff-api-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::117984642414:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "hospital-staff-api",
+      "image": "117984642414.dkr.ecr.eu-central-1.amazonaws.com/hospital-staff-api:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/hospital-staff-api",
+          "awslogs-region": "eu-central-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

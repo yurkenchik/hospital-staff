@@ -35,19 +35,19 @@ import { AwsModule } from "@infrastructure/aws/aws.module";
         TreatmentModule,
         ScheduleModule,
         MedicalRecordModule,
-        // CognitoAuthModule.registerAsync({
-        //     imports: [ConfigModule],
-        //     useFactory: async (configService: ConfigService) => ({
-        //         jwtVerifier: {
-        //             userPoolId: configService.get("COGNITO_USER_POOL_ID") as string,
-        //             clientId: configService.get("COGNITO_CLIENT_ID"),
-        //             tokenUse: "id",
-        //         },
-        //     }),
-        //     inject: [ConfigService],
-        // }),
-        // CognitoAuthorizationModule,
-        // AwsModule
+        CognitoAuthModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => ({
+                jwtVerifier: {
+                    userPoolId: configService.get("COGNITO_USER_POOL_ID") as string,
+                    clientId: configService.get("COGNITO_CLIENT_ID"),
+                    tokenUse: "id",
+                },
+            }),
+            inject: [ConfigService],
+        }),
+        CognitoAuthorizationModule,
+        AwsModule
     ],
     controllers: [AppController],
     providers: [AppService, PostgresService],
